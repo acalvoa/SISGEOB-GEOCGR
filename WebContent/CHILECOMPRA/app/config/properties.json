@@ -1,0 +1,4 @@
+{
+    "registro_referencia_url": "http://apidesarrollo.chilecompra.cl/servicios/v1/privado/GeoCgr/RegistroGeoReferencia.json?ticket=D6DF9A69-2F0E-482E-B1F4-55A234C8193F",
+    "cerrar_url": "http://testingdev.chilecompra.cl/Procurement/CerrarGeoCGR.htm"
+}
