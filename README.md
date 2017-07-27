@@ -1,4 +1,4 @@
-# PORTAL GEOCGR
+# PASARELA - SISGEOB CHILECOMPRA
 
 ## Carcateristicas
 

@@ -13,9 +13,11 @@ public class PropertyManager {
 	public static  String PathProperties; 
 	public static  Properties GEOCGR_FILE;	
 	public static String AMBIENTE_DESPLIEGUE;
+	public static String MAILSOPORTE;
 //	******************************************************************************************
 
 	private static PropertyManager instance=null;
+
 
     private PropertyManager(){
     	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -31,6 +33,7 @@ public class PropertyManager {
 		this.PathProperties = prop.getProperty("PATH_CONFIG_FILE");
 		this.AMBIENTE_DESPLIEGUE = prop.getProperty("ENV");
         this.GEOCGR_FILE = new CargaPropiedades().getFile("GEOCGR");
+        this.MAILSOPORTE = prop.getProperty("MAIL_SOPORTE");
     }
 	public static synchronized PropertyManager getInstance()
 	{
@@ -82,7 +85,6 @@ public class PropertyManager {
 		public static final String CLIENTPORT="CLIENTPORT";
 		public static final String URLMIDESO="URLMIDESO";
 		public static final String CONSULTAIDI="CONSULTAIDI";
-		public static final String CONSULTAFICHA="CONSULTAFICHA";
-		public static final String MAILSOPORTE="MAILSOPORTE"; 
+		public static final String CONSULTAFICHA="CONSULTAFICHA"; 
 	}
 }
