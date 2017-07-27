@@ -181,7 +181,7 @@
 				}
 				return METADATA;
 			},
-			get_regional: function(_RANKING,callbackdpa){
+			get_regional: function(_RANKING,callbackdpa, callbackaux){
 				POP.PUB.hide();
 				LEYENDA.RENDER("CARTOGRAFICO");
 				$("#ranking .listado_obras").html('<div>Obras de Mayor Inversi&oacute;n</div>');
@@ -202,7 +202,8 @@
 						DATA.PUB.clear_poly_spa();
 						var polyregion = {};
 						LAYERS['REGION'] = response.regiones;
-
+						//METODO AUXILIAR, SOLO CARGA LA CARTOGRAFIA
+						if(typeof callbackaux != "undefined") return callbackaux();
 						METADATA = startup.metadata_cartografica(response.regiones);
 						//SE ITERA LAS REGIONES PARA RENDERIZAR EL MAPA.
 						$.each(response.regiones, function(key,value){
@@ -346,7 +347,7 @@
 					},
 					buffered: true
 				});
-				if(typeof callbackdpa != "undefined") callbackdpa();
+				if(typeof callbackdpa != "undefined" && callbackdpa != null) callbackdpa();
 				GEA.PUB.postAdvSearch();
 			},
 			get_provincial: function(UPPER_LAYERS,UPPER_LAYER){
@@ -1043,8 +1044,8 @@
 			metadata_cartografica: function(req){
 				return startup.metadata_cartografica(req);
 			},
-			_INIT: function(INIT){
-				startup.get_regional(INIT);
+			_INIT: function(INIT, callback){
+				startup.get_regional(INIT,null,callback);
 			},
 			_SEARCH: function(MP, callback, callback2){
 				LOADING.show("Efectuando b&uacute;squeda, Espere por favor...");
@@ -1077,7 +1078,9 @@
 							}	
 							else
 							{
-								GEA.PUB.search(result, true);
+								self.PUB._INIT(true, function(){
+									GEA.PUB.search(result, true);
+								});
 							}
 						}
 						else
@@ -1338,6 +1341,7 @@
 				settings.dpa = 0;
 				settings.dpalvl = 3;
 				PRIV.setDpa("comuna");
+				console.log(response)
 				settings.region = response.REGION;
 				settings.regionactual = response.REGION;
 				LOADING.show("Cargando Cartograf&iacute;a y Elementos, Espere por favor...");
@@ -1347,6 +1351,7 @@
 				// RESUPOP.PUB.setMultiObras(UPPER_LAYER.MULTICOM,2);
 				// RESUPOP.PUB.update(Math.floor(UPPER_LAYER.MONTO_CONTRATADO/UPPER_LAYERS_METADATA._TOTAL_MONTO*100));
 				// RESUPOP.PUB.setSubGrafico("Del Total Regional");
+				console.log(LAYERS['REGION']);
 				var METADATA2 = startup.metadata_cartografica(LAYERS['REGION']);
 				RESUPOP.PUB.RESTORE_LVL();
 				RESUPOP.PUB.SET_REGIONAL(response.REGION,METADATA2);
